@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import br.com.caelum.leilao.builder.CriadorDeLeilao;
 import br.com.caelum.leilao.dominio.Leilao;
 import br.com.caelum.leilao.infra.dao.LeilaoDao;
@@ -37,11 +38,14 @@ public class EncerradorDeLeilaoTest {
 		EncerradorDeLeilao encerrador = new EncerradorDeLeilao();
 		encerrador.encerra();
 		
-		List<Leilao> encerrados = dao.encerrados();
+		//Nao precisamos mais do dao.encerrados List<Leilao> encerrados = dao.encerrados();
+		/*
+		pois o dao falso retorna a mesma instancia de valor
+		*/
 		
 		assertEquals(2, encerrados.size());
-		assertTrue(encerrados.get(0).isEncerrado());
-		assertTrue(encerrados.get(1).isEncerrado());
+		assertTrue(leilao1.isEncerrado());
+		assertTrue(leilao2.isEncerrado());
 		
 	}
 }
