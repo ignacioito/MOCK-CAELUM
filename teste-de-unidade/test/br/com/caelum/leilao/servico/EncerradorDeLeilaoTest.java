@@ -1,12 +1,13 @@
 package br.com.caelum.leilao.servico;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-
+import static org.mockito.Mockito.mock;
 import br.com.caelum.leilao.builder.CriadorDeLeilao;
 import br.com.caelum.leilao.dominio.Leilao;
 import br.com.caelum.leilao.infra.dao.LeilaoDao;
@@ -21,11 +22,17 @@ public class EncerradorDeLeilaoTest {
 		Leilao leilao1 = new CriadorDeLeilao().para("TV de plasma").naData(antiga).constroi();
 		Leilao leilao2 = new CriadorDeLeilao().para("Geladeira").naData(antiga).constroi();
 		
-		//Aqui e preciso salvar no banco de dados os dois leiloes criados...no banco dao
+		List<Leilao> leiloesAntigos = Arrays.asList(leilao1, leilao2);
 		
-		LeilaoDaoFalso dao = new LeilaoDaoFalso();
-		dao.salva(leilao1);
-		dao.salva(leilao2);
+		//A partir de agora utilizarei o Mockito para nos auxiliar na criacao de objetos falsos.
+		
+		// agora pedidos ao Mockito que crie um mock da classe leilaoDao
+		
+		LeilaoDao daoFalso = mock(LeilaoDao.class);
+		
+		// Precisamos ensinar o Mock agora, a reagir como esperamos
+		
+		when(daoFalso.correntes()).thenReturn(leiloesAntigos:)
 		
 		EncerradorDeLeilao encerrador = new EncerradorDeLeilao();
 		encerrador.encerra();
